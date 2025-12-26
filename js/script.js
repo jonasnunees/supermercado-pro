@@ -9,8 +9,8 @@ const SUPABASE_URL = 'https://vkgqxwcxnzuqjsgfzuau.supabase.co'; // Ex: https://
 // Chave pública (anon key) do Supabase
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrZ3F4d2N4bnp1cWpzZ2Z6dWF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3MDg3MDAsImV4cCI6MjA4MjI4NDcwMH0.vJnHuo9ORGBSgDPh6TlV8gBR6XjCzY6RYIe_zNjZ5I8';
 
-// Cria a instância do cliente Supabase
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Inicialização correta (evitando conflito com a variável global 'supabase')
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ========================================
 // VARIÁVEIS GLOBAIS
@@ -32,7 +32,7 @@ let currentUser = null;
 // ========================================
 async function checkAuth() {
     // Pega a sessão atual do usuário
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await supabaseClient.auth.getSession();
     
     // Se não houver sessão, redireciona para login
     if (!session) {
@@ -58,7 +58,7 @@ async function checkAuth() {
 async function handleLogout() {
     if (confirm('Deseja realmente sair?')) {
         // Desloga do Supabase
-        await supabase.auth.signOut();
+        await supabaseClient.auth.signOut();
         
         // Redireciona para login
         window.location.href = 'index.html';
@@ -72,7 +72,7 @@ async function handleLogout() {
 async function loadUserData() {
     try {
         // Busca a compra atual do usuário
-        const { data: currentShop, error: currentError } = await supabase
+        const { data: currentShop, error: currentError } = await supabaseClient
             .from('current_shopping')
             .select('*')
             .eq('user_id', currentUser.id)
@@ -85,7 +85,7 @@ async function loadUserData() {
         }
         
         // Busca o histórico de compras do usuário
-        const { data: historyData, error: historyError } = await supabase
+        const { data: historyData, error: historyError } = await supabaseClient
             .from('shopping_history')
             .select('*')
             .eq('user_id', currentUser.id)
@@ -124,7 +124,7 @@ async function saveCurrentShop() {
         };
         
         // Verifica se já existe uma compra em andamento
-        const { data: existing } = await supabase
+        const { data: existing } = await supabaseClient
             .from('current_shopping')
             .select('id')
             .eq('user_id', currentUser.id)
@@ -132,13 +132,13 @@ async function saveCurrentShop() {
         
         if (existing) {
             // Atualiza a compra existente
-            await supabase
+            await supabaseClient
                 .from('current_shopping')
                 .update(shopData)
                 .eq('user_id', currentUser.id);
         } else {
             // Insere uma nova compra
-            await supabase
+            await supabaseClient
                 .from('current_shopping')
                 .insert([shopData]);
         }
@@ -360,12 +360,12 @@ async function finalizePurchase() {
             };
 
             // Insere no histórico
-            await supabase
+            await supabaseClient
                 .from('shopping_history')
                 .insert([record]);
             
             // Remove a compra atual do banco
-            await supabase
+            await supabaseClient
                 .from('current_shopping')
                 .delete()
                 .eq('user_id', currentUser.id);
