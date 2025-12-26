@@ -60,7 +60,6 @@ O **Supermercado Pro** é uma aplicação web desenvolvida para ajudar pessoas a
 
 #### Requisitos
 - Conta no [Supabase](https://supabase.com) (gratuita)
-- Conta no [Vercel](https://vercel.com) para deploy (opcional)
 
 #### Passo a Passo
 
@@ -83,12 +82,6 @@ cd supermercado-pro
 **4. Teste localmente:**
 - Abra o arquivo `login.html` no navegador
 - Ou use um servidor local (ex: Live Server do VS Code)
-
-**5. Deploy (opcional):**
-- Faça push do código para GitHub
-- Conecte seu repositório no Vercel
-- Configure as variáveis de ambiente
-- Deploy automático! 🚀
 
 ### Uso Básico
 
@@ -133,7 +126,6 @@ supermercado-pro/
   - Banco de dados PostgreSQL
   - API REST automática
   - Row Level Security (RLS)
-- **Vercel**: Deploy e hospedagem
 
 ## 💻 Compatibilidade
 
@@ -169,7 +161,6 @@ O projeto funciona em todos os navegadores modernos:
 - Índices otimizados para performance
 
 ### JavaScript
-- Código comentado linha por linha
 - Funções organizadas e reutilizáveis
 - Async/Await para operações assíncronas
 - Manipulação eficiente do DOM
