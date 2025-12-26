@@ -1,4 +1,4 @@
-i# 🛒 Supermercado Pro - Controle Total
+# 🛒 Supermercado Pro - Controle Total
 
 Um sistema completo e intuitivo para gerenciar suas compras de supermercado, controlar orçamento e acompanhar seus gastos ao longo do tempo.
 
@@ -21,68 +21,105 @@ O **Supermercado Pro** é uma aplicação web desenvolvida para ajudar pessoas a
 
 ## 🎯 Funcionalidades
 
+### 🔐 Sistema de Autenticação
+- Cadastro de usuários com email e senha
+- Login seguro com Supabase
+- Cada usuário tem seus próprios dados isolados
+- Logout seguro
+
 ### 💰 Controle de Orçamento
 - Define quanto você pode gastar
 - Mostra o valor disponível em tempo real
 - Exibe o total da compra atual
+- Salva orçamento automaticamente
 
 ### 📝 Gestão de Produtos
 - Adiciona produtos com nome, quantidade e preço
 - Calcula automaticamente o subtotal de cada item
 - Edita produtos já adicionados
 - Remove itens indesejados
+- Sincroniza automaticamente com o banco de dados
 
 ### 📊 Histórico Completo
-- Salva todas as compras finalizadas
+- Salva todas as compras finalizadas na nuvem
 - Filtra por mês e ano
 - Mostra data e hora de cada compra
 - Exibe quanto foi gasto e quanto sobrou
 - Lista resumida dos produtos de cada compra
+- Acesse de qualquer dispositivo
 
-### 💾 Armazenamento Local
-- Todos os dados são salvos no navegador
-- Não perde informações ao fechar a página
-- Não precisa de internet para funcionar
+### ☁️ Armazenamento em Nuvem
+- Todos os dados salvos no Supabase (PostgreSQL)
+- Sincronização automática entre dispositivos
+- Backup automático dos dados
+- Acesso de qualquer lugar
 
 ## 🚀 Como Usar
 
-### Instalação
+### Instalação e Configuração
 
-1. Clone o repositório:
+#### Requisitos
+- Conta no [Supabase](https://supabase.com) (gratuita)
+- Conta no [Vercel](https://vercel.com) para deploy (opcional)
+
+#### Passo a Passo
+
+**1. Clone o repositório:**
 ```bash
 git clone https://github.com/jonasnunees/supermercado-pro.git
-```
-
-2. Navegue até a pasta do projeto:
-```bash
 cd supermercado-pro
 ```
 
-3. Abra o arquivo `index.html` no seu navegador favorito.
+**2. Configure o Supabase:**
+- Siga o guia completo no arquivo [SETUP.md](SETUP.md)
+- Crie o projeto no Supabase
+- Execute o script SQL para criar as tabelas
+- Copie suas credenciais (URL e chave pública)
 
-Pronto! Não precisa instalar nada, é só abrir e usar! 🎉
+**3. Configure as credenciais:**
+- Edite `auth.js` e `script.js`
+- Substitua `SUPABASE_URL` e `SUPABASE_KEY` pelas suas credenciais
+
+**4. Teste localmente:**
+- Abra o arquivo `login.html` no navegador
+- Ou use um servidor local (ex: Live Server do VS Code)
+
+**5. Deploy (opcional):**
+- Faça push do código para GitHub
+- Conecte seu repositório no Vercel
+- Configure as variáveis de ambiente
+- Deploy automático! 🚀
 
 ### Uso Básico
 
-1. **Defina seu orçamento** no campo "Defina seu Orçamento"
-2. **Adicione produtos** preenchendo:
+1. **Cadastre-se** na tela de login com email e senha
+2. **Faça login** para acessar sua conta
+3. **Defina seu orçamento** no campo "Defina seu Orçamento"
+4. **Adicione produtos** preenchendo:
    - Nome do produto
    - Quantidade
    - Preço unitário
-3. **Acompanhe** o valor disponível e o total da compra em tempo real
-4. **Edite ou remova** produtos conforme necessário
-5. **Finalize a compra** clicando em "Finalizar e Salvar"
-6. **Consulte o histórico** e filtre por período
+5. **Acompanhe** o valor disponível e o total da compra em tempo real
+6. **Edite ou remova** produtos conforme necessário
+7. **Finalize a compra** clicando em "Finalizar e Salvar"
+8. **Consulte o histórico** e filtre por período
+9. **Faça logout** quando terminar
 
 ## 📁 Estrutura do Projeto
 
 ```
 supermercado-pro/
 │
-├── index.html          # Estrutura HTML da aplicação
-├── styles.css          # Estilização e design
-├── script.js           # Lógica e funcionalidades
+├── login.html          # Tela de login e cadastro
+├── index.html          # Aplicação principal
+├── styles.css          # Estilização completa
+├── auth.js             # Sistema de autenticação
+├── script.js           # Lógica da aplicação
+├── database.sql        # Schema do banco de dados
+├── SETUP.md            # Guia de configuração completo
 ├── README.md           # Este arquivo
+├── .gitignore          # Arquivos ignorados pelo Git
+├── config.example.js   # Exemplo de configuração
 └── LICENSE             # Licença GPL v3.0
 ```
 
@@ -91,32 +128,53 @@ supermercado-pro/
 - **HTML5**: Estrutura semântica da página
 - **CSS3**: Estilização moderna com variáveis CSS, Flexbox e Grid
 - **JavaScript (Vanilla)**: Lógica da aplicação sem frameworks
-- **LocalStorage API**: Armazenamento persistente de dados
+- **Supabase**: 
+  - Autenticação de usuários
+  - Banco de dados PostgreSQL
+  - API REST automática
+  - Row Level Security (RLS)
+- **Vercel**: Deploy e hospedagem
 
 ## 💻 Compatibilidade
 
 O projeto funciona em todos os navegadores modernos:
 
-- ✅ Google Chrome
+- ✅ Google Chrome (recomendado)
 - ✅ Mozilla Firefox
 - ✅ Microsoft Edge
 - ✅ Safari
 - ✅ Opera
+- ✅ Navegadores mobile (iOS e Android)
+
+**Requisitos:**
+- Conexão com internet (para sincronizar dados)
+- JavaScript habilitado
+- Cookies habilitados (para autenticação)
 
 ## 🎨 Recursos Técnicos
 
-### CSS
+### Frontend
 - Variáveis CSS para fácil personalização de cores
 - Layout responsivo com Flexbox e Grid
 - Bordas arredondadas e sombras suaves
 - Transições animadas
+- Sistema de notificações (toasts)
+
+### Backend (Supabase)
+- Autenticação JWT segura
+- Banco de dados PostgreSQL
+- Row Level Security (RLS) - cada usuário vê apenas seus dados
+- Políticas de segurança automatizadas
+- Triggers para atualização automática de timestamps
+- Índices otimizados para performance
 
 ### JavaScript
 - Código comentado linha por linha
 - Funções organizadas e reutilizáveis
+- Async/Await para operações assíncronas
 - Manipulação eficiente do DOM
 - Validação de dados do usuário
-- Sistema de notificações (toasts)
+- Tratamento de erros robusto
 
 ## 🤝 Contribuindo
 
@@ -148,6 +206,10 @@ Futuras melhorias planejadas:
 - [ ] Lista de compras recorrentes
 - [ ] Comparação de preços entre compras
 - [ ] PWA (funcionar offline como app)
+- [ ] Notificações push
+- [ ] Compartilhar lista com família
+- [ ] Importar lista de texto/foto
+- [ ] Integração com APIs de supermercados
 
 ## 📄 Licença
 
