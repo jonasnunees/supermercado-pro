@@ -261,7 +261,7 @@
             
             try {
                 // Cria a conta no Supabase
-                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                const { data, error } = await supabaseClient.auth.signUp({
                     email: email,
                     password: password,
                     options: {
