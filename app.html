@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- Declaração do tipo de documento HTML5 -->
+<html lang="pt-br">
+<!-- Início do documento HTML com idioma definido como português brasileiro -->
+
+<head>
+    <!-- Seção HEAD contém metadados e links para arquivos externos -->
+    
+    <!-- Define a codificação de caracteres para UTF-8 (suporta acentuação) -->
+    <meta charset="UTF-8">
+    
+    <!-- Configura a visualização responsiva em dispositivos móveis -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título que aparece na aba do navegador -->
+    <title>Supermercado Pro - Controle Total</title>
+    
+    <!-- Link para o arquivo de estilos CSS externo -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Importa a biblioteca Supabase direto do CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <!-- Corpo da página - todo conteúdo visível fica aqui -->
+
+    <!-- Cabeçalho com informações do usuário -->
+    <div class="user-header">
+        <div class="user-info">
+            <span id="user-name">👤 Carregando...</span>
+        </div>
+        <button class="btn-logout" onclick="handleLogout()">Sair</button>
+    </div>
+
+    <!-- Container principal da compra atual -->
+    <div class="container">
+        <!-- Título da seção de compra atual com emoji -->
+        <h2>🛒 Compra Atual</h2>
+        
+        <!-- Painel com os valores (disponível e gasto) -->
+        <div class="dashboard">
+            <!-- Card mostrando o valor disponível (orçamento - gastos) -->
+            <div class="stat-card bg-available">
+                Disponível
+                <!-- Span que será atualizado dinamicamente via JavaScript -->
+                <span id="budget-display">R$ 0.00</span>
+            </div>
+            
+            <!-- Card mostrando o total gasto na compra atual -->
+            <div class="stat-card bg-spent">
+                Total da Compra
+                <!-- Span que será atualizado dinamicamente via JavaScript -->
+                <span id="current-total-display">R$ 0.00</span>
+            </div>
+        </div>
+
+        <!-- Grupo de inputs para adicionar produtos -->
+        <div class="input-group">
+            <!-- Label explicativo para o campo de orçamento -->
+            <label style="font-size: 0.8rem; color: var(--gray)">Defina seu Orçamento:</label>
+            
+            <!-- Input para definir o orçamento total disponível -->
+            <input type="number" id="total-budget" placeholder="R$ 0.00" step="0.01">
+            
+            <!-- Linha horizontal para separar visualmente as seções -->
+            <hr style="width:100%; border: 0.5px solid #eee; margin: 5px 0">
+            
+            <!-- Input para o nome do produto -->
+            <input type="text" id="prod-name" placeholder="Nome do Produto">
+            
+            <!-- Container flexível para quantidade e preço ficarem lado a lado -->
+            <div style="display: flex; gap: 10px;">
+                <!-- Input para quantidade (número inteiro, mínimo 1) -->
+                <input type="number" id="prod-qty" placeholder="Qtd" min="1" style="width: 30%;">
+                
+                <!-- Input para preço (permite decimais com step 0.01) -->
+                <input type="number" id="prod-price" placeholder="Preço" step="0.01" style="width: 70%;">
+            </div>
+            
+            <!-- Botão que chama a função addItem() quando clicado -->
+            <button class="btn-add" onclick="addItem()">Adicionar Produto</button>
+        </div>
+
+        <!-- Container vazio que será preenchido dinamicamente com a lista de produtos -->
+        <div id="list-container"></div>
+        
+        <!-- Botão para finalizar compra (inicialmente oculto, aparece quando há itens) -->
+        <button id="btn-finish" class="btn-finish" onclick="finalizePurchase()" style="display:none">
+            Finalizar e Salvar
+        </button>
+    </div>
+
+    <!-- Seção de filtros para o histórico -->
+    <div class="filter-section">
+        <!-- Select (dropdown) para escolher o mês -->
+        <select id="filter-month">
+            <option value="">Filtrar Mês</option>
+            <option value="0">Janeiro</option>
+            <option value="1">Fevereiro</option>
+            <option value="2">Março</option>
+            <option value="3">Abril</option>
+            <option value="4">Maio</option>
+            <option value="5">Junho</option>
+            <option value="6">Julho</option>
+            <option value="7">Agosto</option>
+            <option value="8">Setembro</option>
+            <option value="9">Outubro</option>
+            <option value="10">Novembro</option>
+            <option value="11">Dezembro</option>
+        </select>
+        
+        <!-- Input para filtrar por ano -->
+        <input type="number" id="filter-year" placeholder="Ano" min="2020">
+        
+        <!-- Botão de busca que atualiza o histórico filtrado -->
+        <button onclick="renderHistory()" style="background: var(--dark); color: white; width: auto;">🔍</button>
+    </div>
+
+    <!-- Box que mostra o total gasto no período filtrado (inicialmente oculto) -->
+    <div id="total-month-display" class="total-month-box" style="display:none">
+        Gasto total no período: R$ <span id="month-value">0.00</span>
+    </div>
+
+    <!-- Container para o histórico de compras anteriores -->
+    <div class="container" style="background: transparent; box-shadow: none; padding-top: 0;">
+        <!-- Título da seção de histórico -->
+        <h3>📜 Compras Anteriores</h3>
+        
+        <!-- Container vazio que será preenchido com o histórico via JavaScript -->
+        <div id="history-container"></div>
+    </div>
+
+    <!-- Elemento de notificação (toast) que aparece temporariamente no canto da tela -->
+    <div id="notification"></div>
+
+    <!-- Link para o arquivo JavaScript externo -->
+    <script src="js/script.js"></script>
+</body>
+</html>

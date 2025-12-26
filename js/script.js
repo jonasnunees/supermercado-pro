@@ -36,7 +36,7 @@ async function checkAuth() {
     
     // Se não houver sessão, redireciona para login
     if (!session) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
     
@@ -61,7 +61,7 @@ async function handleLogout() {
         await supabase.auth.signOut();
         
         // Redireciona para login
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 }
 

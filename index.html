@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Título que aparece na aba do navegador -->
-    <title>Supermercado Pro - Controle Total</title>
+    <title>Supermercado Pro - Login</title>
     
     <!-- Link para o arquivo de estilos CSS externo -->
     <link rel="stylesheet" href="css/styles.css">
@@ -23,118 +23,100 @@
 </head>
 
 <body>
-    <!-- Corpo da página - todo conteúdo visível fica aqui -->
-
-    <!-- Cabeçalho com informações do usuário -->
-    <div class="user-header">
-        <div class="user-info">
-            <span id="user-name">👤 Carregando...</span>
+    <!-- Container principal centralizado -->
+    <div class="container" style="margin-top: 50px;">
+        <!-- Logo ou ícone do aplicativo -->
+        <div style="text-align: center; font-size: 4rem; margin-bottom: 1rem;">
+            🛒
         </div>
-        <button class="btn-logout" onclick="handleLogout()">Sair</button>
-    </div>
-
-    <!-- Container principal da compra atual -->
-    <div class="container">
-        <!-- Título da seção de compra atual com emoji -->
-        <h2>🛒 Compra Atual</h2>
         
-        <!-- Painel com os valores (disponível e gasto) -->
-        <div class="dashboard">
-            <!-- Card mostrando o valor disponível (orçamento - gastos) -->
-            <div class="stat-card bg-available">
-                Disponível
-                <!-- Span que será atualizado dinamicamente via JavaScript -->
-                <span id="budget-display">R$ 0.00</span>
+        <!-- Título da página de login -->
+        <h2>Supermercado Pro</h2>
+        
+        <!-- Subtítulo -->
+        <p style="text-align: center; color: var(--gray); margin-bottom: 2rem;">
+            Controle suas compras de forma inteligente
+        </p>
+
+        <!-- Formulário de Login -->
+        <div id="login-form" class="auth-form">
+            <h3>Entrar na sua conta</h3>
+            
+            <!-- Campo de email -->
+            <div class="input-group">
+                <label for="login-email">E-mail:</label>
+                <input type="email" id="login-email" placeholder="seu@email.com" required>
             </div>
             
-            <!-- Card mostrando o total gasto na compra atual -->
-            <div class="stat-card bg-spent">
-                Total da Compra
-                <!-- Span que será atualizado dinamicamente via JavaScript -->
-                <span id="current-total-display">R$ 0.00</span>
-            </div>
-        </div>
-
-        <!-- Grupo de inputs para adicionar produtos -->
-        <div class="input-group">
-            <!-- Label explicativo para o campo de orçamento -->
-            <label style="font-size: 0.8rem; color: var(--gray)">Defina seu Orçamento:</label>
-            
-            <!-- Input para definir o orçamento total disponível -->
-            <input type="number" id="total-budget" placeholder="R$ 0.00" step="0.01">
-            
-            <!-- Linha horizontal para separar visualmente as seções -->
-            <hr style="width:100%; border: 0.5px solid #eee; margin: 5px 0">
-            
-            <!-- Input para o nome do produto -->
-            <input type="text" id="prod-name" placeholder="Nome do Produto">
-            
-            <!-- Container flexível para quantidade e preço ficarem lado a lado -->
-            <div style="display: flex; gap: 10px;">
-                <!-- Input para quantidade (número inteiro, mínimo 1) -->
-                <input type="number" id="prod-qty" placeholder="Qtd" min="1" style="width: 30%;">
-                
-                <!-- Input para preço (permite decimais com step 0.01) -->
-                <input type="number" id="prod-price" placeholder="Preço" step="0.01" style="width: 70%;">
+            <!-- Campo de senha -->
+            <div class="input-group">
+                <label for="login-password">Senha:</label>
+                <input type="password" id="login-password" placeholder="••••••••" required>
             </div>
             
-            <!-- Botão que chama a função addItem() quando clicado -->
-            <button class="btn-add" onclick="addItem()">Adicionar Produto</button>
+            <!-- Botão de login -->
+            <button class="btn-add" onclick="handleLogin()">Entrar</button>
+            
+            <!-- Link para trocar para cadastro -->
+            <p style="text-align: center; margin-top: 1rem; color: var(--gray);">
+                Não tem uma conta? 
+                <a href="#" onclick="toggleForms(); return false;" style="color: var(--primary); font-weight: bold;">
+                    Cadastre-se
+                </a>
+            </p>
         </div>
 
-        <!-- Container vazio que será preenchido dinamicamente com a lista de produtos -->
-        <div id="list-container"></div>
-        
-        <!-- Botão para finalizar compra (inicialmente oculto, aparece quando há itens) -->
-        <button id="btn-finish" class="btn-finish" onclick="finalizePurchase()" style="display:none">
-            Finalizar e Salvar
-        </button>
+        <!-- Formulário de Cadastro (inicialmente oculto) -->
+        <div id="signup-form" class="auth-form" style="display: none;">
+            <h3>Criar nova conta</h3>
+            
+            <!-- Campo de nome -->
+            <div class="input-group">
+                <label for="signup-name">Nome completo:</label>
+                <input type="text" id="signup-name" placeholder="Seu nome" required>
+            </div>
+            
+            <!-- Campo de email -->
+            <div class="input-group">
+                <label for="signup-email">E-mail:</label>
+                <input type="email" id="signup-email" placeholder="seu@email.com" required>
+            </div>
+            
+            <!-- Campo de senha -->
+            <div class="input-group">
+                <label for="signup-password">Senha:</label>
+                <input type="password" id="signup-password" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            
+            <!-- Campo de confirmação de senha -->
+            <div class="input-group">
+                <label for="signup-confirm">Confirmar senha:</label>
+                <input type="password" id="signup-confirm" placeholder="Digite a senha novamente" required>
+            </div>
+            
+            <!-- Botão de cadastro -->
+            <button class="btn-add" onclick="handleSignup()">Criar conta</button>
+            
+            <!-- Link para trocar para login -->
+            <p style="text-align: center; margin-top: 1rem; color: var(--gray);">
+                Já tem uma conta? 
+                <a href="#" onclick="toggleForms(); return false;" style="color: var(--primary); font-weight: bold;">
+                    Faça login
+                </a>
+            </p>
+        </div>
+
+        <!-- Área de loading (aparece durante autenticação) -->
+        <div id="loading" style="display: none; text-align: center; padding: 2rem;">
+            <div style="font-size: 2rem;">⏳</div>
+            <p style="color: var(--gray);">Aguarde...</p>
+        </div>
     </div>
 
-    <!-- Seção de filtros para o histórico -->
-    <div class="filter-section">
-        <!-- Select (dropdown) para escolher o mês -->
-        <select id="filter-month">
-            <option value="">Filtrar Mês</option>
-            <option value="0">Janeiro</option>
-            <option value="1">Fevereiro</option>
-            <option value="2">Março</option>
-            <option value="3">Abril</option>
-            <option value="4">Maio</option>
-            <option value="5">Junho</option>
-            <option value="6">Julho</option>
-            <option value="7">Agosto</option>
-            <option value="8">Setembro</option>
-            <option value="9">Outubro</option>
-            <option value="10">Novembro</option>
-            <option value="11">Dezembro</option>
-        </select>
-        
-        <!-- Input para filtrar por ano -->
-        <input type="number" id="filter-year" placeholder="Ano" min="2020">
-        
-        <!-- Botão de busca que atualiza o histórico filtrado -->
-        <button onclick="renderHistory()" style="background: var(--dark); color: white; width: auto;">🔍</button>
-    </div>
-
-    <!-- Box que mostra o total gasto no período filtrado (inicialmente oculto) -->
-    <div id="total-month-display" class="total-month-box" style="display:none">
-        Gasto total no período: R$ <span id="month-value">0.00</span>
-    </div>
-
-    <!-- Container para o histórico de compras anteriores -->
-    <div class="container" style="background: transparent; box-shadow: none; padding-top: 0;">
-        <!-- Título da seção de histórico -->
-        <h3>📜 Compras Anteriores</h3>
-        
-        <!-- Container vazio que será preenchido com o histórico via JavaScript -->
-        <div id="history-container"></div>
-    </div>
-
-    <!-- Elemento de notificação (toast) que aparece temporariamente no canto da tela -->
+    <!-- Elemento de notificação (toast) -->
     <div id="notification"></div>
 
-    <!-- Link para o arquivo JavaScript externo -->
-    <script src="js/script.js"></script>
+    <!-- Script de autenticação -->
+    <script src="js/auth.js"></script>
 </body>
 </html>

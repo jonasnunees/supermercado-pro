@@ -99,7 +99,7 @@ async function handleLogin() {
         
         // Aguarda 1 segundo e redireciona para a página principal
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'app.html';
         }, 1000);
         
     } catch (error) {
